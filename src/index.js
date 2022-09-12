@@ -22,7 +22,16 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+  const todos = user.todos.length;
+
+  if (user.pro === true || todos < 10) {
+    next();
+  } else {
+    return response
+      .status(403)
+      .json({ error: "User is not allowed to create more todos" });
+  }
 }
 
 function checksTodoExists(request, response, next) {
